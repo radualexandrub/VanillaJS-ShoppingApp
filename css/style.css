@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 0.65rem;
+}
+
+.list-container__list {
+  list-style: none;
+  padding: 0;
+}
+
+.list-container__item {
+  display: flex;
+  margin: 1rem 0;
+}

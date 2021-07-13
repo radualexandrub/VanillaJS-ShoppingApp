@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My ToDo List</title>
+
+  <link rel="stylesheet" href="./css/style.css">
+  <script defer src="./js/main.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <form>
+        <input type="text" id="inputTextSearchByName" placeholder="Search Items...">
+      </form>
+    </div>
+  </header>
+
+  <div class="container">
+    <form class="form-container">
+      <label for="inputTextItemName">Add an Item:</label>
+      <input type="text" id="inputTextItemName" placeholder="Cheese, Ketchup, Bags...">
+      <button type="submit" id="btnSubmit">Add</button>
+    </form>
+
+    <div>Number of Items: <span id="outputNoOfItems">0</span></div>
+
+    <div class="list-container">
+      <ul class="list-container__list" id="outputItemList">
+        <!-- <li class="list-container__item">
+          <p class="js-edit">Dummy Item 1</p>
+          <button class="js-delete">X</button>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>
