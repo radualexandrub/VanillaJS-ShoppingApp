@@ -1,3 +1,6 @@
+import { utilCreateAndDisplayItem } from "./utilities.js";
+
+/* Get HTML Elements */
 let inputTextItemName = document.getElementById("inputTextItemName");
 let inputTextSearchByName = document.getElementById("inputTextSearchByName");
 
@@ -6,7 +9,7 @@ let btnSubmit = document.getElementById("btnSubmit");
 let outputItemList = document.getElementById("outputItemList");
 let outputNoOfItems = document.getElementById("outputNoOfItems");
 
-// Get items array (if any) from localStorage and display on front-end
+/* Get items array (if any) from localStorage and display on front-end */
 let arrItems;
 let arrItemsJSON = localStorage.getItem("arrItems");
 if (arrItemsJSON && arrItemsJSON.length) {
@@ -15,65 +18,36 @@ if (arrItemsJSON && arrItemsJSON.length) {
   arrItems = [];
 }
 
+/* Add events */
 btnSubmit.addEventListener("click", addItem);
 outputItemList.addEventListener("click", deleteOrEditItem);
 inputTextSearchByName.addEventListener("keyup", searchFilterItems);
 
-window.onload = displayItems;
+window.onload = displayItemsOnLoad;
 
-function displayItems() {
+/* Define events functions */
+function displayItemsOnLoad() {
   arrItems.forEach((item) => {
-    let li = document.createElement("li");
-    li.className = "list-container__item";
-
-    // Create item text paragraph
-    let pName = document.createElement("p");
-    pName.innerText = item.name;
-    pName.className = "js-edit";
-
-    // Create delete button
-    let btnDelete = document.createElement("button");
-    btnDelete.className = "js-delete";
-    btnDelete.innerHTML = "X";
-
-    li.appendChild(pName);
-    li.appendChild(btnDelete);
-
-    // Display item in list and clear input
-    outputItemList.appendChild(li);
+    utilCreateAndDisplayItem(item.name, item.id);
     outputNoOfItems.innerHTML = arrItems.length;
   });
+  console.log(arrItems);
 }
 
 function addItem(event) {
   event.preventDefault();
-
-  // Check if input string is empty
   if (inputTextItemName.value === "") {
     return;
   }
 
-  let li = document.createElement("li");
-  li.className = "list-container__item";
+  /* Generate ID for element */
+  let itemID = Math.random().toString(16).slice(2);
 
-  // Create item text paragraph
-  let pName = document.createElement("p");
-  pName.innerText = inputTextItemName.value.trim();
-  pName.className = "js-edit";
+  /* Display item in front-end */
+  utilCreateAndDisplayItem(inputTextItemName.value.trim(), itemID);
 
-  // Create delete button
-  let btnDelete = document.createElement("button");
-  btnDelete.className = "js-delete";
-  btnDelete.innerHTML = "X";
-
-  li.appendChild(pName);
-  li.appendChild(btnDelete);
-
-  // Display item in list and clear input
-  outputItemList.appendChild(li);
-
-  /* Save item to js array */
-  arrItems.push({ name: inputTextItemName.value.trim() });
+  /* Save item to js array, clear form input */
+  arrItems.push({ id: itemID, name: inputTextItemName.value.trim() });
   inputTextItemName.value = "";
   outputNoOfItems.innerHTML = arrItems.length;
 
@@ -87,8 +61,8 @@ function deleteOrEditItem(event) {
     outputItemList.removeChild(li);
 
     // Delete item from local array
-    let itemNameToDelete = event.target.parentElement.innerText.slice(0, -1);
-    arrItems = arrItems.filter((item) => item.name !== itemNameToDelete);
+    let itemIDToDelete = event.target.parentElement.getAttribute("data-key");
+    arrItems = arrItems.filter((item) => item.id !== itemIDToDelete);
     outputNoOfItems.innerHTML = arrItems.length;
 
     // Save items array to localStorage
@@ -98,12 +72,13 @@ function deleteOrEditItem(event) {
   if (event.target.classList.contains("js-edit")) {
     let pNewName = prompt("Edit your entry", event.target.innerText);
     if (pNewName !== null && pNewName !== event.target.innerText) {
+      let itemIDToEdit = event.target.parentElement.getAttribute("data-key");
       let itemFoundIndex = arrItems.findIndex(
-        (item) => item.name === event.target.innerText
+        (item) => item.id === itemIDToEdit
       );
-      arrItems[itemFoundIndex].name = pNewName;
 
       event.target.innerText = pNewName;
+      arrItems[itemFoundIndex].name = pNewName;
 
       // Save items array to localStorage
       localStorage.setItem("arrItems", JSON.stringify(arrItems));
