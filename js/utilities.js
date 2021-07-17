@@ -3,8 +3,8 @@ function utilCreateAndDisplayItem(innerText, itemID) {
   li.className = "list-container__item";
 
   // Create item text paragraph
-  let pName = document.createElement("p");
-  pName.innerText = innerText;
+  let pName = document.createElement("input");
+  pName.value = innerText;
   pName.className = "js-edit";
 
   // Create delete button

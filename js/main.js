@@ -70,19 +70,22 @@ function deleteOrEditItem(event) {
   }
 
   if (event.target.classList.contains("js-edit")) {
-    let pNewName = prompt("Edit your entry", event.target.innerText);
-    if (pNewName !== null && pNewName !== event.target.innerText) {
-      let itemIDToEdit = event.target.parentElement.getAttribute("data-key");
-      let itemFoundIndex = arrItems.findIndex(
-        (item) => item.id === itemIDToEdit
-      );
+    // let pNewName = prompt("Edit your entry", event.target.innerText); // deprecated
 
-      event.target.innerText = pNewName;
-      arrItems[itemFoundIndex].name = pNewName;
+    let itemIDToEdit = event.target.parentElement.getAttribute("data-key");
+    let itemFoundIndex = arrItems.findIndex((item) => item.id === itemIDToEdit);
+    let pOldName = arrItems[itemFoundIndex].name;
 
-      // Save items array to localStorage
-      localStorage.setItem("arrItems", JSON.stringify(arrItems));
-    }
+    event.target.addEventListener("blur", function () {
+      let pNewName = event.target.value;
+      if (pNewName !== null && pNewName !== pOldName) {
+        event.target.value = pNewName;
+        arrItems[itemFoundIndex].name = pNewName;
+
+        // Save items array to localStorage
+        localStorage.setItem("arrItems", JSON.stringify(arrItems));
+      }
+    });
   }
 }
 
