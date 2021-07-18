@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My ToDo List</title>
+  <title>RB Shopping List</title>
 
   <link rel="stylesheet" href="./css/style.css">
   <script defer src="./js/main.js" type="module"></script>
@@ -21,20 +21,23 @@
   </header>
 
   <div class="container">
-    <form class="form-container">
-      <label for="inputTextItemName">Add an Item:</label>
-      <input type="text" id="inputTextItemName" placeholder="Cheese, Ketchup, Bags...">
+    <form class="form-container" id="formAddItem">
+      <div class="form-container__input">
+        <label for="inputTextItemName">Add an Item:</label>
+        <input type="text" id="inputTextItemName" placeholder="Cheese, Ketchup, Bags...">
+      </div>
+      <div class="form-container__input">
+        <label for="inputNumberItemPrice">Price:</label>
+        <input type="number" id="inputNumberItemPrice" value=0 step="0.01">
+      </div>
       <button type="submit" id="btnSubmit">Add</button>
     </form>
 
     <div>Number of Items: <span id="outputNoOfItems">0</span></div>
+    <div>Price of All Items: <span id="outputTotalPriceAll">0</span></div>
 
     <div class="list-container">
       <ul class="list-container__list" id="outputItemList">
-        <!-- <li class="list-container__item">
-          <p class="js-edit">Dummy Item 1</p>
-          <button class="js-delete">X</button>
-        </li> -->
       </ul>
     </div>
   </div>

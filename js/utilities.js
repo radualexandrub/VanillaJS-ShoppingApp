@@ -1,11 +1,16 @@
-function utilCreateAndDisplayItem(innerText, itemID) {
+function utilCreateAndDisplayItem(itemID, itemName, itemPrice) {
   let li = document.createElement("li");
   li.className = "list-container__item";
 
-  // Create item text paragraph
-  let pName = document.createElement("input");
-  pName.value = innerText;
-  pName.className = "js-edit";
+  // Create item input text to display and edit item name
+  let inputDisplayItemName = document.createElement("input");
+  inputDisplayItemName.value = itemName;
+  inputDisplayItemName.className = "js-edit-name";
+
+  // Create item input number to display and edit item price
+  let inputDisplayItemPrice = document.createElement("input");
+  inputDisplayItemPrice.value = itemPrice;
+  inputDisplayItemPrice.className = "js-edit-price";
 
   // Create delete button
   let btnDelete = document.createElement("button");
@@ -13,7 +18,8 @@ function utilCreateAndDisplayItem(innerText, itemID) {
   btnDelete.innerHTML = "X";
 
   li.setAttribute("data-key", itemID);
-  li.appendChild(pName);
+  li.appendChild(inputDisplayItemName);
+  li.appendChild(inputDisplayItemPrice);
   li.appendChild(btnDelete);
 
   // Display item in list
