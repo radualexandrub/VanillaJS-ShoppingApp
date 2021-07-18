@@ -1,4 +1,4 @@
-function utilCreateAndDisplayItem(itemID, itemName, itemPrice) {
+function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
   let li = document.createElement("li");
   li.className = "list-container__item";
 
@@ -17,7 +17,16 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice) {
   btnDelete.className = "js-delete";
   btnDelete.innerHTML = "X";
 
+  // Create checkbox for checked item
+  let inputDisplayItemChecked = document.createElement("input");
+  inputDisplayItemChecked.type = "checkbox";
+  inputDisplayItemChecked.className = "js-check-item";
+  if (itemChecked) {
+    inputDisplayItemChecked.checked = true;
+  }
+
   li.setAttribute("data-key", itemID);
+  li.appendChild(inputDisplayItemChecked);
   li.appendChild(inputDisplayItemName);
   li.appendChild(inputDisplayItemPrice);
   li.appendChild(btnDelete);
@@ -26,4 +35,28 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice) {
   outputItemList.appendChild(li);
 }
 
-export { utilCreateAndDisplayItem };
+function utilUpdateAndDisplayTotalItemsAndPrice(
+  arrItems,
+  outputTotalPriceAll,
+  outputTotalPriceChecked,
+  outputTotalPriceUnchecked
+) {
+  outputNoOfItems.innerHTML = arrItems.length;
+  outputTotalPriceAll.innerHTML = arrItems.reduce((total, item) => {
+    return (total += parseFloat(item.price));
+  }, 0);
+  outputTotalPriceChecked.innerHTML = arrItems.reduce((total, item) => {
+    if (item.checked) {
+      total += parseFloat(item.price);
+    }
+    return total;
+  }, 0);
+  outputTotalPriceUnchecked.innerHTML = arrItems.reduce((total, item) => {
+    if (item.checked === false) {
+      total += parseFloat(item.price);
+    }
+    return total;
+  }, 0);
+}
+
+export { utilCreateAndDisplayItem, utilUpdateAndDisplayTotalItemsAndPrice };

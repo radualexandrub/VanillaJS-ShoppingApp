@@ -1,6 +1,11 @@
-import { utilCreateAndDisplayItem } from "./utilities.js";
+import {
+  utilCreateAndDisplayItem,
+  utilUpdateAndDisplayTotalItemsAndPrice,
+} from "./utilities.js";
 
-/* Get HTML Elements */
+/* 
+  Get HTML Elements
+*/
 let formAddItem = document.getElementById("formAddItem");
 let inputTextItemName = document.getElementById("inputTextItemName");
 let inputTextSearchByName = document.getElementById("inputTextSearchByName");
@@ -10,8 +15,16 @@ let btnSubmit = document.getElementById("btnSubmit");
 let outputItemList = document.getElementById("outputItemList");
 let outputNoOfItems = document.getElementById("outputNoOfItems");
 let outputTotalPriceAll = document.getElementById("outputTotalPriceAll");
+let outputTotalPriceChecked = document.getElementById(
+  "outputTotalPriceChecked"
+);
+let outputTotalPriceUnchecked = document.getElementById(
+  "outputTotalPriceUnchecked"
+);
 
-/* Get items array (if any) from localStorage and display on front-end */
+/* 
+  Get items array (if any) from localStorage and display on front-end
+*/
 let arrItems;
 let arrItemsJSON = localStorage.getItem("arrItems");
 if (arrItemsJSON && arrItemsJSON.length) {
@@ -20,24 +33,36 @@ if (arrItemsJSON && arrItemsJSON.length) {
   arrItems = [];
 }
 
-/* Add events */
+/*
+  Add events
+*/
 formAddItem.addEventListener("submit", addItem);
 outputItemList.addEventListener("click", deleteOrEditItem);
 inputTextSearchByName.addEventListener("keyup", searchFilterItems);
 window.onload = displayItemsOnLoad;
 
-/* Define events functions */
+/*
+  Define events functions
+*/
 function displayItemsOnLoad() {
   arrItems.forEach((item) => {
-    utilCreateAndDisplayItem(item.id, item.name, item.price);
+    utilCreateAndDisplayItem(item.id, item.name, item.price, item.checked);
   });
-  outputNoOfItems.innerHTML = arrItems.length;
-  outputTotalPriceAll.innerHTML = arrItems.reduce((total, item) => {
-    return (total += parseFloat(item.price));
-  }, 0);
+
+  /* Update display of total items and price */
+  utilUpdateAndDisplayTotalItemsAndPrice(
+    arrItems,
+    outputTotalPriceAll,
+    outputTotalPriceChecked,
+    outputTotalPriceUnchecked
+  );
+
   console.log(arrItems);
 }
 
+/*
+  Add Item Event
+*/
 function addItem(event) {
   event.preventDefault();
   if (inputTextItemName.value === "" || inputNumberItemPrice.value === "") {
@@ -58,17 +83,26 @@ function addItem(event) {
     id: itemID,
     name: inputTextItemName.value.trim(),
     price: inputNumberItemPrice.value,
+    checked: false,
   });
   inputTextItemName.value = "";
   inputNumberItemPrice.value = "";
-  outputNoOfItems.innerHTML = arrItems.length;
-  outputTotalPriceAll.innerHTML = arrItems.reduce((total, item) => {
-    return (total += parseFloat(item.price));
-  }, 0);
-  // Save items array to localStorage
+
+  /* Update display of total items and price */
+  utilUpdateAndDisplayTotalItemsAndPrice(
+    arrItems,
+    outputTotalPriceAll,
+    outputTotalPriceChecked,
+    outputTotalPriceUnchecked
+  );
+
+  /* Save items array to localStorage */
   localStorage.setItem("arrItems", JSON.stringify(arrItems));
 }
 
+/*
+  Delete or Edit Item Event
+*/
 function deleteOrEditItem(event) {
   if (event.target.classList.contains("js-delete")) {
     let li = event.target.parentElement;
@@ -77,12 +111,16 @@ function deleteOrEditItem(event) {
     // Delete item from local array
     let itemIDToDelete = event.target.parentElement.getAttribute("data-key");
     arrItems = arrItems.filter((item) => item.id !== itemIDToDelete);
-    outputNoOfItems.innerHTML = arrItems.length;
-    outputTotalPriceAll.innerHTML = arrItems.reduce((total, item) => {
-      return (total += parseFloat(item.price));
-    }, 0);
 
-    // Save items array to localStorage
+    /* Update display of total items and price */
+    utilUpdateAndDisplayTotalItemsAndPrice(
+      arrItems,
+      outputTotalPriceAll,
+      outputTotalPriceChecked,
+      outputTotalPriceUnchecked
+    );
+
+    /* Save items array to localStorage */
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
   }
 
@@ -98,7 +136,7 @@ function deleteOrEditItem(event) {
         event.target.value = pNewName;
         arrItems[itemFoundIndex].name = pNewName;
 
-        // Save items array to localStorage
+        /* Save items array to localStorage */
         localStorage.setItem("arrItems", JSON.stringify(arrItems));
       }
     });
@@ -115,17 +153,48 @@ function deleteOrEditItem(event) {
         event.target.value = pNewPrice;
         arrItems[itemFoundIndex].price = pNewPrice;
 
-        outputTotalPriceAll.innerHTML = arrItems.reduce((total, item) => {
-          return (total += parseFloat(item.price));
-        }, 0);
+        /* Update display of total items and price */
+        utilUpdateAndDisplayTotalItemsAndPrice(
+          arrItems,
+          outputTotalPriceAll,
+          outputTotalPriceChecked,
+          outputTotalPriceUnchecked
+        );
 
-        // Save items array to localStorage
+        /* Save items array to localStorage */
         localStorage.setItem("arrItems", JSON.stringify(arrItems));
       }
     });
   }
+
+  if (event.target.classList.contains("js-check-item")) {
+    let itemIDToCheck = event.target.parentElement.getAttribute("data-key");
+    let itemFoundIndex = arrItems.findIndex(
+      (item) => item.id === itemIDToCheck
+    );
+
+    if (event.target.checked) {
+      arrItems[itemFoundIndex].checked = true;
+    } else {
+      arrItems[itemFoundIndex].checked = false;
+    }
+
+    /* Update display of total items and price */
+    utilUpdateAndDisplayTotalItemsAndPrice(
+      arrItems,
+      outputTotalPriceAll,
+      outputTotalPriceChecked,
+      outputTotalPriceUnchecked
+    );
+
+    /* Save items array to localStorage */
+    localStorage.setItem("arrItems", JSON.stringify(arrItems));
+  }
 }
 
+/*
+  Search Item by Name Event
+*/
 function searchFilterItems(event) {
   event.preventDefault();
   let searchedText = event.target.value.toLowerCase().trim();

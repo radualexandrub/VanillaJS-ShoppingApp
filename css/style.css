@@ -19,3 +19,9 @@
   display: flex;
   margin: 1rem 0;
 }
+
+.list-container__item input[type="checkbox"]:checked ~ input.js-edit-name,
+.list-container__item input[type="checkbox"]:checked ~ input.js-edit-price {
+  text-decoration: line-through;
+  color: #666;
+}
