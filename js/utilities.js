@@ -11,10 +11,12 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
   let inputDisplayItemPrice = document.createElement("input");
   inputDisplayItemPrice.value = itemPrice;
   inputDisplayItemPrice.className = "js-edit-price";
+  inputDisplayItemPrice.title = "Change the price of this item";
 
   // Create delete button
   let btnDelete = document.createElement("button");
   btnDelete.className = "js-delete";
+  btnDelete.title = "Delete this item from list";
 
   // Create checkbox for checked item
   let inputDisplayItemChecked = document.createElement("input");
@@ -101,9 +103,9 @@ function getTodayDateFormatted() {
 
 function getGreetingByTimeOfDay() {
   const time = new Date().getHours();
-  if (time >= 5 && time <= 12) {
+  if (time >= 5 && time < 12) {
     return "Good morning";
-  } else if (time <= 18) {
+  } else if (time < 18) {
     return "Good afternoon";
   } else {
     return "Good evening";

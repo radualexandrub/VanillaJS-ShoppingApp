@@ -6,6 +6,26 @@
   padding: 0;
 }
 
+/* Utilities */
+:root {
+  --primary-color: #3b6276;
+  --primary-color-lighten: #446677;
+  --background-color: #fefefe;
+  --background-color-secondary: #fff;
+  --font-main-color: #000;
+}
+
+[data-theme="dark"] {
+  --background-color: #0b1014;
+  --background-color-secondary: #121a20;
+  --font-main-color: #fff;
+}
+
+::selection {
+  background: var(--primary-color);
+  color: #fff;
+}
+
 html {
   height: 100%;
 }
@@ -13,19 +33,34 @@ html {
 body {
   font-family: sans-serif;
   font-size: 16px;
+  color: var(--font-main-color);
   /* useful for sticking the footer to bottom of page */
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: var(--background-color);
+  transition: background-color 200ms ease-in;
 }
 
-/* Utilities */
-:root {
-  --primary-color: #3b6276;
+input {
+  color: var(--font-main-color);
 }
-::selection {
-  background: var(--primary-color);
-  color: #fff;
+
+/* Scrollbar */
+html::-webkit-scrollbar {
+  width: 0.9rem;
+}
+html::-webkit-scrollbar-thumb {
+  background-color: #686868;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background-color: #7b7b7b;
+}
+html::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+html::-webkit-scrollbar-track:hover {
+  background-color: #f0f0f0;
 }
 
 /* Styling */
@@ -41,11 +76,16 @@ body {
   margin-top: auto;
   box-shadow: -2px -3px 8px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  margin-top: 2rem;
   text-align: center;
+  background-color: var(--background-color-secondary);
+  transition: background-color 200ms ease-in;
 }
 .footer a {
   text-decoration: none;
+  color: var(--primary-color-lighten);
+}
+.footer--space-before {
+  margin: 1rem 0;
 }
 
 /* Header Hero Banner */
@@ -68,16 +108,19 @@ body {
 
 .searchbar {
   display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: 1em;
+  min-width: 15em;
 }
 .searchbar__input {
   background: rgba(255, 255, 255, 0.2);
   margin-left: auto;
-  margin-top: 1em;
-  min-width: 15em;
   border: 2px solid transparent;
   border-radius: 1rem;
   padding: 0.75em;
   color: #fff;
+  font-size: 1.05em;
   transition: border-color 200ms ease-in;
 }
 .searchbar__input:focus {
@@ -87,13 +130,52 @@ body {
 .searchbar__input::placeholder {
   color: #ddd;
 }
+.searchbar .search-icon::before {
+  content: "\f002";
+  font-family: "Font Awesome 5 Free";
+  pointer-events: none;
+  font-weight: 900;
+  font-size: 1.1em;
+  color: #fff;
+  position: absolute;
+  right: 3em;
+  top: 0.9em;
+}
 
+/* Dark mode toggle */
+.toggle-dark-mode {
+  position: relative;
+  margin-left: 1em;
+}
+.toggle-dark-mode input[type="checkbox"] {
+  width: 1.5em;
+  height: 1.5em;
+  opacity: 0;
+  cursor: pointer;
+}
+.toggle-dark-mode input[type="checkbox"] ~ .dark-mode-icon::before {
+  content: "\f186";
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  font-size: 1.5em;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #fff;
+}
+.toggle-dark-mode input[type="checkbox"]:checked ~ .dark-mode-icon::before {
+  content: "\f185";
+}
+
+/* Header: Form Container for adding items */
 .form-container {
-  background: #fff;
+  background-color: var(--background-color-secondary);
   padding: 1.5rem 1.25rem;
-  margin-top: -10rem;
+  margin-top: -11rem;
   border-radius: 1rem;
   box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.12);
+  transition: background-color 200ms ease-in;
 }
 .form-container > * + * {
   /* Lobotomized owl: select everything except first child */
@@ -110,6 +192,7 @@ body {
 .form__input {
   padding: 0.75em;
   font-size: 1em;
+  color: #000;
   border: solid 2px #c8c8c8;
   border-radius: 1rem;
   transition: border-color 200ms ease-in;
@@ -118,7 +201,12 @@ body {
   outline: none;
   border-color: var(--primary-color);
 }
+
+/* Box-shadows should NOT be transitioned 
+* directly but with :after and opacity
+* to improve performance */
 .form__btn {
+  position: relative;
   padding: 0.85em 1.75em;
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
@@ -129,10 +217,30 @@ body {
   letter-spacing: 1px;
   cursor: pointer;
 }
+.form__btn:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 1rem;
+  opacity: 0;
+  box-shadow: 2px 2px 12px 0 var(--primary-color-lighten);
+  transition: opacity 200ms ease;
+}
+.form__btn:hover::after {
+  opacity: 1;
+}
+.form__btn:focus::after {
+  opacity: 1;
+  box-shadow: 0 0 12px 2px var(--primary-color);
+}
 .form__btn:focus,
 .form__btn:hover {
   outline: none;
-  transform: scale(1.1);
+  background-color: var(--primary-color-lighten);
+  border-color: var(--primary-color-lighten);
 }
 
 .form__item--input-btn {
@@ -223,7 +331,7 @@ body {
   content: "";
   width: 1.4em;
   height: 1.4em;
-  border: 0.05em solid #000;
+  border: 0.05em solid var(--font-main-color);
   border-radius: 0.15em;
   margin-right: 0.5em;
   transition: background-color 200ms;
@@ -241,5 +349,5 @@ body {
   background-color: #2b627c;
 }
 .list-container__item .js-check-item:focus + .checkbox::before {
-  box-shadow: 0 0 2px 1px #1a3b4b90;
+  box-shadow: 0 0 2px 1px var(--primary-color-lighten);
 }

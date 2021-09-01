@@ -13,7 +13,6 @@ let formAddItem = document.getElementById("formAddItem");
 let inputTextItemName = document.getElementById("inputTextItemName");
 let inputTextSearchByName = document.getElementById("inputTextSearchByName");
 let inputNumberItemPrice = document.getElementById("inputNumberItemPrice");
-let btnSubmit = document.getElementById("btnSubmit");
 
 let outputItemList = document.getElementById("outputItemList");
 let outputNoOfItems = document.getElementById("outputNoOfItems");
@@ -70,11 +69,24 @@ function displayItemsOnLoad() {
 }
 
 /*
-  Add Item Event
+  Add Item Event on Submit
 */
+inputTextItemName.addEventListener("focus", function () {
+  // Clear any red border from validation
+  inputTextItemName.style = "";
+});
+inputNumberItemPrice.addEventListener("focus", function () {
+  inputNumberItemPrice.style = "";
+});
+
 function addItem(event) {
   event.preventDefault();
-  if (inputTextItemName.value === "" || inputNumberItemPrice.value === "") {
+  if (inputTextItemName.value === "") {
+    inputTextItemName.style = "border-color: red;";
+    return;
+  }
+  if (inputNumberItemPrice.value === "") {
+    inputNumberItemPrice.style = "border-color: red;";
     return;
   }
   /* Generate ID for element */
@@ -221,4 +233,27 @@ function searchFilterItems(event) {
   });
 
   outputNoOfItems.innerHTML = cntSearchedItems;
+}
+
+/* Dark Mode */
+const checkboxDarkTheme = document.getElementById("toggleDarkMode");
+const currentTheme = localStorage.getItem("theme")
+  ? localStorage.getItem("theme")
+  : null;
+if (currentTheme) {
+  document.documentElement.setAttribute("data-theme", currentTheme);
+  if (currentTheme === "dark") {
+    checkboxDarkTheme.checked = true;
+  }
+}
+
+checkboxDarkTheme.addEventListener("change", toggleDarkTheme);
+function toggleDarkTheme(e) {
+  if (e.target.checked) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+  }
 }
