@@ -351,3 +351,20 @@ html::-webkit-scrollbar-track:hover {
 .list-container__item .js-check-item:focus + .checkbox::before {
   box-shadow: 0 0 2px 1px var(--primary-color-lighten);
 }
+
+/**************/
+/* Animations */
+.js-delete-animation {
+  animation: 500ms forwards fadeout-animation;
+}
+@keyframes fadeout-animation {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(80%);
+    opacity: 0;
+  }
+}

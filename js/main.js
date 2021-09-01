@@ -127,7 +127,11 @@ function addItem(event) {
 function deleteOrEditItem(event) {
   if (event.target.classList.contains("js-delete")) {
     let li = event.target.parentElement;
-    outputItemList.removeChild(li);
+    li.classList.add("js-delete-animation");
+    li.addEventListener("animationend", function () {
+      li.remove();
+      // outputItemList.removeChild(li); // old method
+    });
 
     // Delete item from local array
     let itemIDToDelete = event.target.parentElement.getAttribute("data-key");
