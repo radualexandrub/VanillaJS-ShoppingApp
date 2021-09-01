@@ -5,44 +5,73 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RB Shopping List</title>
+  <title>Easy Shopping List App with Price</title>
 
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script defer src="./js/main.js" type="module"></script>
 </head>
 
 <body>
   <header class="header">
     <div class="container">
-      <form>
-        <input type="text" id="inputTextSearchByName" placeholder="Search Items...">
+      <form class="searchbar">
+        <input class="searchbar__input" type="text" id="inputTextSearchByName" autocomplete="off"
+          placeholder="Search Items...">
+        <!-- <div class="fas fa-search"></div> -->
+        <div class="darkmode-toggle">
+
+        </div>
       </form>
+
+      <div class="header__greeting" id="outputGreetingByTime"></div>
+      <div class="header__date">
+        <date id="outputTodayDate"></date>
+      </div>
     </div>
   </header>
 
   <div class="container">
     <form class="form-container" id="formAddItem">
-      <div class="form-container__input">
-        <label for="inputTextItemName">Add an Item:</label>
-        <input type="text" id="inputTextItemName" placeholder="Cheese, Ketchup, Bags...">
+      <div class="form__item">
+        <label class="form__label" for="inputTextItemName">Add an Item:</label>
+        <input class="form__input" type="text" id="inputTextItemName" autocomplete="off"
+          placeholder="Cheese, Ketchup, Bags...">
       </div>
-      <div class="form-container__input">
-        <label for="inputNumberItemPrice">Price:</label>
-        <input type="number" id="inputNumberItemPrice" value=0 step="0.01">
+      <div class="form__item">
+        <label class="form__label" for="inputNumberItemPrice">Price:</label>
+        <div class="form__item--input-btn">
+          <input class="form__input" type="number" id="inputNumberItemPrice" value=0 step="0.01">
+          <button class="form__btn" type="submit" id="btnSubmit">Add Item</button>
+        </div>
       </div>
-      <button type="submit" id="btnSubmit">Add</button>
     </form>
+
+    <div class="list-container">
+      <ul class="list-container__list" id="outputItemList">
+        <li class="list-container__item" data-key="c5db765af9bf8">
+          <input type="checkbox" class="js-check-item">
+          <span class="checkbox"></span>
+          <input class="js-edit-name" value="Test item">
+          <input class="js-edit-price" value=5>
+          <button class="js-delete"></button>
+        </li>
+      </ul>
+    </div>
 
     <div>Number of Items: <span id="outputNoOfItems">0</span></div>
     <div>Price of All Items: <span id="outputTotalPriceAll">0</span></div>
     <div>Price of Checked Items: <span id="outputTotalPriceChecked">0</span></div>
     <div>Price of Unchecked Items: <span id="outputTotalPriceUnchecked">0</span></div>
 
-    <div class="list-container">
-      <ul class="list-container__list" id="outputItemList">
-      </ul>
-    </div>
   </div>
+
+  <footer class="footer">
+    <p>Designed and coded with 💙 by <a href="https://radubulai.com" target="_blank">Radu</a><br /> using Figma and
+      Vanilla JS</p>
+  </footer>
 </body>
 
 </html>

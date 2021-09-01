@@ -1,6 +1,9 @@
 import {
   utilCreateAndDisplayItem,
   utilUpdateAndDisplayTotalItemsAndPrice,
+  capitalizeFirstLetter,
+  getTodayDateFormatted,
+  getGreetingByTimeOfDay,
 } from "./utilities.js";
 
 /* 
@@ -22,8 +25,14 @@ let outputTotalPriceUnchecked = document.getElementById(
   "outputTotalPriceUnchecked"
 );
 
+let outputTodayDateGreeting = document.getElementById("outputTodayDate");
+outputTodayDateGreeting.innerHTML = getTodayDateFormatted();
+
+let outputGreetingByTime = document.getElementById("outputGreetingByTime");
+outputGreetingByTime.innerHTML = getGreetingByTimeOfDay();
+
 /* 
-  Get items array (if any) from localStorage and display on front-end
+  Get items array (if any) from localStorage
 */
 let arrItems;
 let arrItemsJSON = localStorage.getItem("arrItems");
@@ -57,7 +66,7 @@ function displayItemsOnLoad() {
     outputTotalPriceUnchecked
   );
 
-  console.log(arrItems);
+  // console.log(arrItems);
 }
 
 /*
@@ -74,14 +83,14 @@ function addItem(event) {
   /* Display item in front-end */
   utilCreateAndDisplayItem(
     itemID,
-    inputTextItemName.value.trim(),
+    capitalizeFirstLetter(inputTextItemName.value.trim()),
     inputNumberItemPrice.value
   );
 
   /* Save item to js array, clear form input */
   arrItems.push({
     id: itemID,
-    name: inputTextItemName.value.trim(),
+    name: capitalizeFirstLetter(inputTextItemName.value.trim()),
     price: inputNumberItemPrice.value,
     checked: false,
   });
@@ -202,7 +211,7 @@ function searchFilterItems(event) {
   let cntSearchedItems = 0;
 
   Array.from(allItems).forEach((item) => {
-    let itemName = item.firstChild.value;
+    let itemName = item.children[2].value;
     if (itemName.toLowerCase().indexOf(searchedText) !== -1) {
       item.style.display = "flex";
       cntSearchedItems += 1;

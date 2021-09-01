@@ -2,26 +2,244 @@
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 0.65rem;
-}
-
-.list-container__list {
-  list-style: none;
+  margin: 0;
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 16px;
+  /* useful for sticking the footer to bottom of page */
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Utilities */
+:root {
+  --primary-color: #3b6276;
+}
+::selection {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Styling */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  box-shadow: -2px -3px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+.footer a {
+  text-decoration: none;
+}
+
+/* Header Hero Banner */
+.header {
+  background-image: url(/imgs/banner-image.jpg);
+  background-size: cover;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  height: 40vh;
+  max-height: 600px;
+}
+.header__greeting,
+.header__date {
+  margin-top: 1em;
+  color: #fff;
+}
+.header__greeting {
+  font-size: 2rem;
+}
+
+.searchbar {
+  display: flex;
+}
+.searchbar__input {
+  background: rgba(255, 255, 255, 0.2);
+  margin-left: auto;
+  margin-top: 1em;
+  min-width: 15em;
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  padding: 0.75em;
+  color: #fff;
+  transition: border-color 200ms ease-in;
+}
+.searchbar__input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+.searchbar__input::placeholder {
+  color: #ddd;
+}
+
+.form-container {
+  background: #fff;
+  padding: 1.5rem 1.25rem;
+  margin-top: -10rem;
+  border-radius: 1rem;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.12);
+}
+.form-container > * + * {
+  /* Lobotomized owl: select everything except first child */
+  margin-top: 1em;
+}
+.form__item {
+  display: flex;
+  flex-direction: column;
+}
+.form__label {
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+}
+.form__input {
+  padding: 0.75em;
+  font-size: 1em;
+  border: solid 2px #c8c8c8;
+  border-radius: 1rem;
+  transition: border-color 200ms ease-in;
+}
+.form__input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+.form__btn {
+  padding: 0.85em 1.75em;
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 1rem;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.form__btn:focus,
+.form__btn:hover {
+  outline: none;
+  transform: scale(1.1);
+}
+
+.form__item--input-btn {
+  display: flex;
+}
+.form__item--input-btn .form__input {
+  flex-grow: 2;
+  margin-right: 1em;
+}
+
+/***********************/
+/* Shopping List Items */
+.list-container__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+}
 .list-container__item {
   display: flex;
-  margin: 1rem 0;
+  padding: 0.2rem 1.25rem;
+  margin: 0.3rem 0;
+  align-items: center;
+  border-radius: 1rem;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+}
+.list-container__item input {
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  transition: border-color 200ms ease-in;
+  outline: none;
+  padding: 0.25em 0.5em;
+}
+.list-container__item input:focus {
+  border-color: var(--primary-color);
+}
+.list-container__item input.js-edit-price {
+  margin-left: auto;
+  margin-right: 1rem;
+  max-width: 4rem;
+}
+.list-container__item input.js-edit-name {
+  flex-grow: 1;
+}
+.list-container__item input.js-edit-price,
+.list-container__item input.js-edit-name {
+  font-size: 1.1em;
+}
+
+.list-container__item .js-delete {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.list-container__item .js-delete::after {
+  content: "\f2ed";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.4em;
+  color: var(--primary-color);
 }
 
 .list-container__item input[type="checkbox"]:checked ~ input.js-edit-name,
 .list-container__item input[type="checkbox"]:checked ~ input.js-edit-price {
   text-decoration: line-through;
-  color: #666;
+  opacity: 0.5;
+}
+.list-container__item input[type="checkbox"]:checked ~ .js-delete {
+  opacity: 0.7;
+}
+
+/*************************************************/
+/* Custom Checkbox Tutorial - Web Dev Simplified */
+.list-container__item .checkbox {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0.1em;
+}
+.list-container__item .js-check-item {
+  cursor: pointer;
+  opacity: 0;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+}
+.list-container__item .checkbox::before {
+  content: "";
+  width: 1.4em;
+  height: 1.4em;
+  border: 0.05em solid #000;
+  border-radius: 0.15em;
+  margin-right: 0.5em;
+  transition: background-color 200ms;
+}
+.list-container__item .checkbox:hover::before,
+.list-container__item .js-check-item:hover + .checkbox::before {
+  background-color: #2b627c40;
+}
+.list-container__item .js-check-item:checked + .checkbox::before {
+  content: "\002714";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #2b627c;
+}
+.list-container__item .js-check-item:focus + .checkbox::before {
+  box-shadow: 0 0 2px 1px #1a3b4b90;
 }
