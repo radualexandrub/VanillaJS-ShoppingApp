@@ -90,7 +90,7 @@ html::-webkit-scrollbar-track:hover {
 
 /* Header Hero Banner */
 .header {
-  background-image: url(/imgs/banner-image.jpg);
+  background-image: url(https://radubulai.com/VanillaJS-ShoppingApp/imgs/banner-image.jpg);
   background-size: cover;
   background-position: 50% 0;
   background-repeat: no-repeat;
