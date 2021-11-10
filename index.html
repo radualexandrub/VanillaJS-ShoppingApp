@@ -46,11 +46,12 @@
         <input class="form__input" type="text" id="inputTextItemName" autocomplete="off"
           placeholder="Cheese, Ketchup, Bags...">
       </div>
+
       <div class="form__item">
         <label class="form__label" for="inputNumberItemPrice">Price:</label>
         <div class="form__item--input-btn">
           <input class="form__input" type="number" id="inputNumberItemPrice" value=0 step="0.01">
-          <button class="form__btn" type="submit" id="btnSubmit">Add Item</button>
+          <button class="form__btn" type="submit" id="btnSubmit">Add</button>
         </div>
       </div>
     </form>
@@ -67,15 +68,56 @@
       </ul>
     </div>
 
-    <div>Number of Items: <span id="outputNoOfItems">0</span></div>
-    <div>Price of All Items: <span id="outputTotalPriceAll">0</span></div>
-    <div>Price of Checked Items: <span id="outputTotalPriceChecked">0</span></div>
-    <div>Price of Unchecked Items: <span id="outputTotalPriceUnchecked">0</span></div>
+    <table class="table-container">
+      <tbody>
+        <tr>
+          <td>
+            Number of Items
+          </td>
+          <td>
+            <span id="outputNoOfItems">0</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Price of All Items
+          </td>
+          <td>
+            <span id="outputTotalPriceAll">0</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Price of Checked Items
+          </td>
+          <td>
+            <span id="outputTotalPriceChecked">0</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Price of Unchecked Items
+          </td>
+          <td>
+            <span id="outputTotalPriceUnchecked">0</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   </div>
 
+
+
   <div class="footer--space-before"></div>
   <footer class="footer">
+    <div class="see-on-github-bubble" title="See the code on GitHub"><a
+        href="https://github.com/radualexandrub/VanillaJS-ShoppingApp" target="_blank"><i
+          class="fab fa-github fa-2x"></i></a>
+    </div>
     <p>Designed and coded with 💙 by <a href="https://radubulai.com" target="_blank">Radu</a><br /> using Figma and
       Vanilla JS</p>
   </footer>

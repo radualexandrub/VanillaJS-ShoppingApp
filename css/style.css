@@ -65,10 +65,18 @@ html::-webkit-scrollbar-track:hover {
 
 /* Styling */
 .container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
 }
 
 /* Footer */
@@ -83,9 +91,22 @@ html::-webkit-scrollbar-track:hover {
 .footer a {
   text-decoration: none;
   color: var(--primary-color-lighten);
+  transition: color 200ms ease-in-out;
+}
+.footer a:hover {
+  color: var(--font-main-color);
 }
 .footer--space-before {
-  margin: 1rem 0;
+  margin: 1.4rem 0;
+}
+.see-on-github-bubble {
+  margin-top: -2.2rem;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 480px) {
+  .footer {
+    font-size: 0.9em;
+  }
 }
 
 /* Header Hero Banner */
@@ -177,6 +198,21 @@ html::-webkit-scrollbar-track:hover {
   box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.12);
   transition: background-color 200ms ease-in;
 }
+@media screen and (max-width: 480px) {
+  .form-container {
+    margin-top: -7rem;
+  }
+}
+@media screen and (max-width: 400px) {
+  .form-container {
+    margin-top: -5rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .form-container {
+    margin-top: -2rem;
+  }
+}
 .form-container > * + * {
   /* Lobotomized owl: select everything except first child */
   margin-top: 1em;
@@ -186,7 +222,7 @@ html::-webkit-scrollbar-track:hover {
   flex-direction: column;
 }
 .form__label {
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin-bottom: 0.5em;
 }
 .form__input {
@@ -200,6 +236,15 @@ html::-webkit-scrollbar-track:hover {
 .form__input:focus {
   outline: none;
   border-color: var(--primary-color);
+}
+
+.form__item--input-btn {
+  display: flex;
+}
+.form__item--input-btn .form__input {
+  flex-grow: 2;
+  margin-right: 1em;
+  min-width: 2rem;
 }
 
 /* Box-shadows should NOT be transitioned 
@@ -243,12 +288,12 @@ html::-webkit-scrollbar-track:hover {
   border-color: var(--primary-color-lighten);
 }
 
-.form__item--input-btn {
-  display: flex;
-}
-.form__item--input-btn .form__input {
-  flex-grow: 2;
-  margin-right: 1em;
+@media screen and (max-width: 480px) {
+  .form__input,
+  .form__label,
+  .form__btn {
+    font-size: 0.9em;
+  }
 }
 
 /***********************/
@@ -261,7 +306,7 @@ html::-webkit-scrollbar-track:hover {
 }
 .list-container__item {
   display: flex;
-  padding: 0.2rem 1.25rem;
+  padding: 0.1rem 1.25rem;
   margin: 0.3rem 0;
   align-items: center;
   border-radius: 1rem;
@@ -274,21 +319,27 @@ html::-webkit-scrollbar-track:hover {
   transition: border-color 200ms ease-in;
   outline: none;
   padding: 0.25em 0.5em;
+  word-break: break-word;
+  font-size: 1.1em;
 }
 .list-container__item input:focus {
   border-color: var(--primary-color);
 }
 .list-container__item input.js-edit-price {
-  margin-left: auto;
+  justify-self: flex-end;
   margin-right: 1rem;
   max-width: 4rem;
+  text-align: end;
 }
 .list-container__item input.js-edit-name {
   flex-grow: 1;
+  min-width: 8rem;
 }
-.list-container__item input.js-edit-price,
-.list-container__item input.js-edit-name {
-  font-size: 1.1em;
+
+@media screen and (max-width: 480px) {
+  .list-container__item input {
+    font-size: 0.9em;
+  }
 }
 
 .list-container__item .js-delete {
@@ -350,6 +401,40 @@ html::-webkit-scrollbar-track:hover {
 }
 .list-container__item .js-check-item:focus + .checkbox::before {
   box-shadow: 0 0 2px 1px var(--primary-color-lighten);
+}
+
+/********************************/
+/* Table Container of List Data */
+.table-container {
+  align-self: center;
+  background: var(--background-color-secondary);
+  padding: 1rem 1.25rem;
+  width: 100%;
+  max-width: 32rem;
+  border-radius: 1rem;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.12);
+  transition: background-color 200ms ease-in;
+  border-collapse: collapse;
+}
+.table-container th,
+.table-container td {
+  padding: 0.5rem 1.25rem;
+}
+.table-container td:first-child,
+.table-container td:last-child {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.table-container tbody tr + tr {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.table-container td:last-child {
+  text-align: right;
+}
+@media screen and (max-width: 480px) {
+  .table-container {
+    font-size: 0.9em;
+  }
 }
 
 /**************/

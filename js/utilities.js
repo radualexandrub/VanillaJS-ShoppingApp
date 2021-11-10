@@ -11,12 +11,12 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
   let inputDisplayItemPrice = document.createElement("input");
   inputDisplayItemPrice.value = itemPrice;
   inputDisplayItemPrice.className = "js-edit-price";
-  inputDisplayItemPrice.title = "Change the price of this item";
+  inputDisplayItemPrice.title = "Change the price of item";
 
   // Create delete button
   let btnDelete = document.createElement("button");
   btnDelete.className = "js-delete";
-  btnDelete.title = "Delete this item from list";
+  btnDelete.title = "Delete item from list";
 
   // Create checkbox for checked item
   let inputDisplayItemChecked = document.createElement("input");
