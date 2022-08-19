@@ -1,28 +1,51 @@
 # Shopping List Application with prices (CRUD) made with Vanilla JavaScript
 
-This projects consists on Shopping List App with an extra field for prices:
+This project consists on a Shopping List App with an extra field for prices:
 
 ✅ Designed with [Figma](https://www.figma.com/)
+
 ✅ Coded with Vanilla JS from scratch
 
 **View it live right here -> [https://radubulai.com/VanillaJS-ShoppingApp/](https://radualexandrub.github.io/VanillaJS-ShoppingApp/).**
 
 <br/>
 
-## Some nice features:
+Contents:
 
-- Items that includes name, price and checked/unchecked
+- [Shopping List Application with prices (CRUD) made with Vanilla JavaScript](#shopping-list-application-with-prices-crud-made-with-vanilla-javascript)
+  - [Screenshots](#screenshots)
+  - [Some nice features](#some-nice-features)
+  - [How to run](#how-to-run)
+  - [Small resources I used:](#small-resources-i-used)
+  - [Data format](#data-format)
+  - [Figma designs and attempts](#figma-designs-and-attempts)
+  - [License](#license)
+
+<br/>
+
+## Screenshots
+
+![Shopping List App with prices](./imgs/demo05.png)
+
+![Shopping List App with prices](./imgs/demo02.png)
+
+<br/>
+
+## Some nice features
+
+- Items include name, price and checked/unchecked
 - Delete items with a fancy animation
 - Check/Uncheck items on your list
 - Update/Edit items on the go, just by clicking its name or its price
 - Search items by name
 - Display extra information that's updated on every add/edit/delete
-    - Number of Items
-    - Price of All Items
-    - Price of Checked Items
-    - Price of Unchecked Items
+  - Number of Items
+  - Price of All Items
+  - Price of Checked Items
+  - Price of Unchecked Items
 - Responsivess across all devices
 - Includes dark mode
+- All items are saved to Local Storage
 
 <br/>
 
@@ -41,14 +64,6 @@ code .
 👉 Press `CTRL+SHIFT+P` within VS Code and select "Open with Live Server"
 
 👉 The app should open at [http://localhost:5500/index.html](http://localhost:5500/index.html) / http://127.0.0.1:5500/index.html
-
-<br/>
-
-## Screenshots
-
-![Shopping List App with prices](./imgs/demo05.png)
-
-![Shopping List App with prices](./imgs/demo02.png)
 
 <br/>
 
@@ -88,6 +103,16 @@ JSON:
   }
 ]
 ```
+
+<br/>
+
+## Figma designs and attempts
+
+![Shopping List App Design](./design/Figma_1.jpg)
+
+![Shopping List App Design](./design/Figma_2.jpg)
+
+![Shopping List App Design](./design/Figma_3.jpg)
 
 <br/>
 
