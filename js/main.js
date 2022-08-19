@@ -53,6 +53,8 @@ window.onload = displayItemsOnLoad;
   Define events functions
 */
 function displayItemsOnLoad() {
+  console.debug("Calling displayItemsOnLoad: " + JSON.stringify(arrItems));
+
   arrItems.forEach((item) => {
     utilCreateAndDisplayItem(item.id, item.name, item.price, item.checked);
   });
@@ -64,8 +66,6 @@ function displayItemsOnLoad() {
     outputTotalPriceChecked,
     outputTotalPriceUnchecked
   );
-
-  // console.log(arrItems);
 }
 
 /*
@@ -80,13 +80,16 @@ inputNumberItemPrice.addEventListener("focus", function () {
 });
 
 function addItem(event) {
+  console.debug("Calling addItem...");
   event.preventDefault();
   if (inputTextItemName.value === "") {
     inputTextItemName.style = "border-color: red;";
+    console.debug("addItem: inputTextItemName cannot be empty!");
     return;
   }
   if (inputNumberItemPrice.value === "") {
     inputNumberItemPrice.style = "border-color: red;";
+    console.debug("addItem: inputNumberItemPrice cannot be empty!");
     return;
   }
   /* Generate ID for element */
@@ -118,6 +121,10 @@ function addItem(event) {
   );
 
   /* Save items array to localStorage */
+  console.debug(
+    "addItem called successfully! Saving new array to localStorage: " +
+      JSON.stringify(arrItems)
+  );
   localStorage.setItem("arrItems", JSON.stringify(arrItems));
 }
 
@@ -125,6 +132,7 @@ function addItem(event) {
   Delete or Edit Item Event
 */
 function deleteOrEditItem(event) {
+  console.debug("Calling deleteOrEditItem...");
   if (event.target.classList.contains("js-delete")) {
     let li = event.target.parentElement;
     li.classList.add("js-delete-animation");
@@ -136,6 +144,9 @@ function deleteOrEditItem(event) {
     // Delete item from local array
     let itemIDToDelete = event.target.parentElement.getAttribute("data-key");
     arrItems = arrItems.filter((item) => item.id !== itemIDToDelete);
+    console.debug(
+      "deleteOrEditItem: item with id " + itemIDToDelete + " deleted"
+    );
 
     /* Update display of total items and price */
     utilUpdateAndDisplayTotalItemsAndPrice(
@@ -146,6 +157,10 @@ function deleteOrEditItem(event) {
     );
 
     /* Save items array to localStorage */
+    console.debug(
+      "deleteOrEditItem called successfully! Saving new array to localStorage: " +
+        JSON.stringify(arrItems)
+    );
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
   }
 
@@ -163,6 +178,14 @@ function deleteOrEditItem(event) {
 
         /* Save items array to localStorage */
         localStorage.setItem("arrItems", JSON.stringify(arrItems));
+        console.debug(
+          "deleteOrEditItem called successfully! Saving new array to localStorage: " +
+            JSON.stringify(arrItems)
+        );
+      } else {
+        console.debug(
+          "deleteOrEditItem: pNewName has the same value as before"
+        );
       }
     });
   }
@@ -187,7 +210,15 @@ function deleteOrEditItem(event) {
         );
 
         /* Save items array to localStorage */
+        console.debug(
+          "deleteOrEditItem called successfully! Saving new array to localStorage: " +
+            JSON.stringify(arrItems)
+        );
         localStorage.setItem("arrItems", JSON.stringify(arrItems));
+      } else {
+        console.debug(
+          "deleteOrEditItem: pNewPrice has the same value as before"
+        );
       }
     });
   }
@@ -200,8 +231,14 @@ function deleteOrEditItem(event) {
 
     if (event.target.checked) {
       arrItems[itemFoundIndex].checked = true;
+      console.debug(
+        "deleteOrEditItem: item with id " + itemIDToCheck + " checked"
+      );
     } else {
       arrItems[itemFoundIndex].checked = false;
+      console.debug(
+        "deleteOrEditItem: item with id " + itemIDToCheck + " unchecked"
+      );
     }
 
     /* Update display of total items and price */
@@ -213,6 +250,11 @@ function deleteOrEditItem(event) {
     );
 
     /* Save items array to localStorage */
+    console.debug(
+      "deleteOrEditItem called successfully! Saving new array to localStorage: " +
+        JSON.stringify(arrItems)
+    );
+    localStorage.setItem("arrItems", JSON.stringify(arrItems));
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
   }
 }
@@ -256,8 +298,10 @@ function toggleDarkTheme(e) {
   if (e.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
+    console.debug("toggleDarkTheme called: dark theme set");
   } else {
     document.documentElement.setAttribute("data-theme", "light");
     localStorage.setItem("theme", "light");
+    console.debug("toggleDarkTheme called: light theme set");
   }
 }

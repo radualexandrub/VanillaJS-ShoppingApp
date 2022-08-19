@@ -38,6 +38,16 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
 
   // Display item in list
   outputItemList.appendChild(li);
+
+  console.debug(
+    "Calling utilCreateAndDisplayItem with " +
+      JSON.stringify({
+        id: itemID,
+        name: itemName,
+        price: itemPrice,
+        checked: itemChecked,
+      })
+  );
 }
 
 function utilUpdateAndDisplayTotalItemsAndPrice(
