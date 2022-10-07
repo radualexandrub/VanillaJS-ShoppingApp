@@ -6,7 +6,7 @@ This project consists on a Shopping List App with an extra field for prices:
 
 ✅ Coded with Vanilla JS from scratch
 
-**View it live right here -> [https://radubulai.com/VanillaJS-ShoppingApp/](https://radualexandrub.github.io/VanillaJS-ShoppingApp/).**
+🚀 **View it live right here -> [https://radubulai.com/VanillaJS-ShoppingApp/](https://radualexandrub.github.io/VanillaJS-ShoppingApp/).**
 
 <br/>
 
