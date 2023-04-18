@@ -46,6 +46,7 @@ Contents:
 - Responsivess across all devices
 - Includes dark mode
 - All items are saved to Local Storage
+- Export your list to a JSON file / Import from a JSON file locally
 
 <br/>
 
@@ -118,6 +119,6 @@ JSON:
 
 ## License
 
-Copyright (c) 2022 [Radu-Alexandru Bulai](https://radualexandrub.github.io/).
+Copyright (c) 2022-2023 [Radu-Alexandru Bulai](https://radualexandrub.github.io/).
 
-Released under [MIT License](./LICENSE.md).
+Released under [MIT License](./LICENSE).
