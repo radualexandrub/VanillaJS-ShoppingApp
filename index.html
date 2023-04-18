@@ -30,6 +30,12 @@
           <input type="checkbox" id="toggleDarkMode" title="Toggle between light and dark theme">
           <span class="dark-mode-icon"></span>
         </div>
+
+        <div class="toggle-modal-popup">
+          <input type="checkbox" id="settingsModal"
+            data-modal="settings-modal" title="Open settings Popup">
+          <span class="settings-icon"></span>
+        </div>
       </form>
 
       <div class="header__greeting" id="outputGreetingByTime"></div>
@@ -110,7 +116,74 @@
 
   </div>
 
-
+  <!-- Modal Settings PopUp -->
+  <div class="modal" id="settings-modal">
+    <div class="modal__bg js-modal__exit"></div>
+    <div class="modal__container">
+      <p class="h2">Import or Export List</p>
+      <form id="importJSONFileForm" class="form-container--modal"
+        style="accent-color: var(--primary-color);">
+        <!-- File Input -->
+        <div style="margin-bottom: 1rem">
+          <label for="JSONFileInput"
+            >Please select a JSON File containing a Shopping List</label
+          >
+          <input type="file" id="JSONFileInput" accept=".json" />
+        </div>
+        <!-- Radio Buttons Inputs -->
+        <label
+          >Select whether to overwrite or add to current Tasks list</label
+        >
+        <div>
+          <input
+            type="radio"
+            name="JSONFileRadioInputs"
+            id="JSONFileRadioConcatenateList"
+            value="JSONFileRadioConcatenateList"
+            checked="checked"
+          />
+          <label for="JSONFileRadioConcatenateList">
+            Add (Concatenate) to current list
+          </label>
+        </div>
+        <div style="margin-bottom: 1rem">
+          <input
+            type="radio"
+            name="JSONFileRadioInputs"
+            id="JSONFileRadioOverwriteList"
+            value="JSONFileRadioOverwriteList"
+          />
+          <label for="JSONFileRadioOverwriteList">
+            Overwrite current list
+          </label>
+        </div>
+        <div
+          id="importJSONFileFormOutputMessages"
+          style="margin-bottom: 1rem"
+        >
+          <!-- Import Output Messages will be displayed here -->
+        </div>
+        <!-- Submit/Upload Button -->
+        <div style="display: flex; justify-content: end">
+          <button
+            type="submit"
+            class="form__btn"
+            style="padding: 0.55em 1.25em"
+          >
+            Upload
+          </button>
+        </div>
+      </form>
+      <a
+        href="#"
+        title="Export List as JSON"
+        style="text-decoration: none; color: var(--primary-color-lighten);"
+        id="exportListAsJSONAnchorLink"
+        >Export List</a
+      >
+      <button class="modal__close js-modal__exit" title="Close modal">x</button>
+    </div>
+  </div>
 
   <div class="footer--space-before"></div>
   <footer class="footer">
