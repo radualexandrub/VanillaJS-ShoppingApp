@@ -1,199 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="Radu Bulai" />
+    <title>Easy Shopping List App with Prices</title>
+    <meta
+      name="description"
+      content="Shopping List App 🛒 with automatic Price Calculation made insanely easy to use! ✅ Never forget anything to buy from the grocery store again!"
+    />
+    <link rel="canonical" href="/" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script defer src="./js/main.js" type="module"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index,follow" />
-  <meta name="author" content="Radu Bulai">
-  <title>Easy Shopping List App with Prices</title>
-  <meta name="description"
-    content="Shopping List App 🛒 with automatic Price Calculation made insanely easy to use! ✅ Never forget anything to buy from the grocery store again!">
-  <link rel="canonical" href="/" />
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script defer src="./js/main.js" type="module"></script>
-</head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <form class="searchbar">
+          <input
+            class="searchbar__input"
+            type="text"
+            id="inputTextSearchByName"
+            autocomplete="off"
+            placeholder="Search Items..."
+          />
+          <span class="search-icon"></span>
 
-<body>
-  <header class="header">
+          <div class="toggle-dark-mode">
+            <input
+              type="checkbox"
+              id="toggleDarkMode"
+              title="Toggle between light and dark theme"
+            />
+            <span class="dark-mode-icon"></span>
+          </div>
+
+          <div class="toggle-modal-popup">
+            <input
+              type="checkbox"
+              id="settingsModal"
+              data-modal="settings-modal"
+              title="Open settings Popup"
+            />
+            <span class="settings-icon"></span>
+          </div>
+        </form>
+
+        <div class="header__greeting" id="outputGreetingByTime"></div>
+        <div class="header__date">
+          <date id="outputTodayDate"></date>
+        </div>
+      </div>
+    </header>
+
     <div class="container">
-      <form class="searchbar">
-        <input class="searchbar__input" type="text" id="inputTextSearchByName" autocomplete="off"
-          placeholder="Search Items...">
-        <span class="search-icon"></span>
-
-        <div class="toggle-dark-mode">
-          <input type="checkbox" id="toggleDarkMode" title="Toggle between light and dark theme">
-          <span class="dark-mode-icon"></span>
+      <form class="form-container" id="formAddItem">
+        <div class="form__item">
+          <label class="form__label" for="inputTextItemName"
+            >Add an Item:</label
+          >
+          <input
+            class="form__input"
+            type="text"
+            id="inputTextItemName"
+            autocomplete="off"
+            placeholder="Cheese, Ketchup, Bags..."
+          />
         </div>
 
-        <div class="toggle-modal-popup">
-          <input type="checkbox" id="settingsModal"
-            data-modal="settings-modal" title="Open settings Popup">
-          <span class="settings-icon"></span>
+        <div class="form__item">
+          <label class="form__label" for="inputNumberItemPrice">Price:</label>
+          <div class="form__item--input-btn">
+            <input
+              class="form__input"
+              type="number"
+              id="inputNumberItemPrice"
+              value="0"
+              step="0.01"
+            />
+            <button class="form__btn" type="submit" id="btnSubmit">Add</button>
+          </div>
         </div>
       </form>
 
-      <div class="header__greeting" id="outputGreetingByTime"></div>
-      <div class="header__date">
-        <date id="outputTodayDate"></date>
-      </div>
-    </div>
-  </header>
-
-  <div class="container">
-    <form class="form-container" id="formAddItem">
-      <div class="form__item">
-        <label class="form__label" for="inputTextItemName">Add an Item:</label>
-        <input class="form__input" type="text" id="inputTextItemName" autocomplete="off"
-          placeholder="Cheese, Ketchup, Bags...">
-      </div>
-
-      <div class="form__item">
-        <label class="form__label" for="inputNumberItemPrice">Price:</label>
-        <div class="form__item--input-btn">
-          <input class="form__input" type="number" id="inputNumberItemPrice" value=0 step="0.01">
-          <button class="form__btn" type="submit" id="btnSubmit">Add</button>
-        </div>
-      </div>
-    </form>
-
-    <div class="list-container">
-      <ul class="list-container__list" id="outputItemList">
-        <!-- <li class="list-container__item" data-key="c5db765af9bf8">
+      <div class="list-container">
+        <ul class="list-container__list" id="outputItemList">
+          <!-- <li class="list-container__item" data-key="c5db765af9bf8">
           <input type="checkbox" class="js-check-item">
           <span class="checkbox"></span>
           <input class="js-edit-name" value="Test item">
           <input class="js-edit-price" value=5>
           <button class="js-delete"></button>
         </li> -->
-      </ul>
+        </ul>
+      </div>
+
+      <table class="table-container">
+        <tbody>
+          <tr>
+            <td>Number of Items</td>
+            <td>
+              <span id="outputNoOfItems">0</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Price of All Items</td>
+            <td>
+              <span id="outputTotalPriceAll">0</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Price of Checked Items</td>
+            <td>
+              <span id="outputTotalPriceChecked">0</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Price of Unchecked Items</td>
+            <td>
+              <span id="outputTotalPriceUnchecked">0</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <table class="table-container">
-      <tbody>
-        <tr>
-          <td>
-            Number of Items
-          </td>
-          <td>
-            <span id="outputNoOfItems">0</span>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            Price of All Items
-          </td>
-          <td>
-            <span id="outputTotalPriceAll">0</span>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            Price of Checked Items
-          </td>
-          <td>
-            <span id="outputTotalPriceChecked">0</span>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            Price of Unchecked Items
-          </td>
-          <td>
-            <span id="outputTotalPriceUnchecked">0</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <!-- Modal Settings PopUp -->
-  <div class="modal" id="settings-modal">
-    <div class="modal__bg js-modal__exit"></div>
-    <div class="modal__container">
-      <p class="h2">Import or Export List</p>
-      <form id="importJSONFileForm" class="form-container--modal"
-        style="accent-color: var(--primary-color);">
-        <!-- File Input -->
-        <div style="margin-bottom: 1rem">
-          <label for="JSONFileInput"
-            >Please select a JSON File containing a Shopping List</label
-          >
-          <input type="file" id="JSONFileInput" accept=".json" />
-        </div>
-        <!-- Radio Buttons Inputs -->
-        <label
-          >Select whether to overwrite or add to current Tasks list</label
+    <!-- Modal Settings PopUp -->
+    <div class="modal" id="settings-modal">
+      <div class="modal__bg js-modal__exit"></div>
+      <div class="modal__container">
+        <p class="h2">Import or Export List</p>
+        <form
+          id="importJSONFileForm"
+          class="form-container--modal"
+          style="accent-color: var(--primary-color)"
         >
-        <div>
-          <input
-            type="radio"
-            name="JSONFileRadioInputs"
-            id="JSONFileRadioConcatenateList"
-            value="JSONFileRadioConcatenateList"
-            checked="checked"
-          />
-          <label for="JSONFileRadioConcatenateList">
-            Add (Concatenate) to current list
-          </label>
-        </div>
-        <div style="margin-bottom: 1rem">
-          <input
-            type="radio"
-            name="JSONFileRadioInputs"
-            id="JSONFileRadioOverwriteList"
-            value="JSONFileRadioOverwriteList"
-          />
-          <label for="JSONFileRadioOverwriteList">
-            Overwrite current list
-          </label>
-        </div>
-        <div
-          id="importJSONFileFormOutputMessages"
-          style="margin-bottom: 1rem"
-        >
-          <!-- Import Output Messages will be displayed here -->
-        </div>
-        <!-- Submit/Upload Button -->
-        <div style="display: flex; justify-content: end">
-          <button
-            type="submit"
-            class="form__btn"
-            style="padding: 0.55em 1.25em"
+          <!-- File Input -->
+          <div style="margin-bottom: 1rem">
+            <label for="JSONFileInput"
+              >Please select a JSON File containing a Shopping List</label
+            >
+            <input type="file" id="JSONFileInput" accept=".json" />
+          </div>
+          <!-- Radio Buttons Inputs -->
+          <label
+            >Select whether to overwrite or add to current Tasks list</label
           >
-            Upload
-          </button>
-        </div>
-      </form>
-      <a
-        href="#"
-        title="Export List as JSON"
-        style="text-decoration: none; color: var(--primary-color-lighten);"
-        id="exportListAsJSONAnchorLink"
-        >Export List</a
-      >
-      <button class="modal__close js-modal__exit" title="Close modal">x</button>
+          <div>
+            <input
+              type="radio"
+              name="JSONFileRadioInputs"
+              id="JSONFileRadioConcatenateList"
+              value="JSONFileRadioConcatenateList"
+              checked="checked"
+            />
+            <label for="JSONFileRadioConcatenateList">
+              Add (Concatenate) to current list
+            </label>
+          </div>
+          <div style="margin-bottom: 1rem">
+            <input
+              type="radio"
+              name="JSONFileRadioInputs"
+              id="JSONFileRadioOverwriteList"
+              value="JSONFileRadioOverwriteList"
+            />
+            <label for="JSONFileRadioOverwriteList">
+              Overwrite current list
+            </label>
+          </div>
+          <div
+            id="importJSONFileFormOutputMessages"
+            style="margin-bottom: 1rem"
+          >
+            <!-- Import Output Messages will be displayed here -->
+          </div>
+          <!-- Submit/Upload Button -->
+          <div style="display: flex; justify-content: end">
+            <button
+              type="submit"
+              class="form__btn"
+              style="padding: 0.55em 1.25em"
+            >
+              Upload
+            </button>
+          </div>
+        </form>
+        <a
+          href="#"
+          title="Export List as JSON"
+          style="text-decoration: none; color: var(--primary-color-lighten)"
+          id="exportListAsJSONAnchorLink"
+          >Export List</a
+        >
+        <button class="modal__close js-modal__exit" title="Close modal">
+          x
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div class="footer--space-before"></div>
-  <footer class="footer">
-    <div class="see-on-github-bubble" title="See the code on GitHub"><a
-        href="https://github.com/radualexandrub/VanillaJS-ShoppingApp" target="_blank"><i
-          class="fab fa-github fa-2x"></i></a>
-    </div>
-    <p>Designed and coded with 💙 by <a href="https://radubulai.com" target="_blank">Radu</a><br /> using Figma and
-      Vanilla JS</p>
-  </footer>
-</body>
-
+    <div class="footer--space-before"></div>
+    <footer class="footer">
+      <div class="see-on-github-bubble" title="See the code on GitHub">
+        <a
+          href="https://github.com/radualexandrub/VanillaJS-ShoppingApp"
+          target="_blank"
+          ><i class="fab fa-github fa-2x"></i
+        ></a>
+      </div>
+      <p>
+        Designed and coded with 💙 by
+        <a href="https://radubulai.com" target="_blank">Radu</a><br />
+        using Figma and Vanilla JS
+      </p>
+    </footer>
+  </body>
 </html>
