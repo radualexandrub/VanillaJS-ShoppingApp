@@ -30,6 +30,12 @@
           <input type="checkbox" id="toggleDarkMode" title="Toggle between light and dark theme">
           <span class="dark-mode-icon"></span>
         </div>
+
+        <div class="toggle-modal-popup">
+          <input type="checkbox" id="settingsModal"
+            data-modal="settings-modal" title="Open settings Popup">
+          <span class="settings-icon"></span>
+        </div>
       </form>
 
       <div class="header__greeting" id="outputGreetingByTime"></div>
@@ -110,7 +116,22 @@
 
   </div>
 
-
+  <!-- Modal Settings PopUp -->
+  <div class="modal" id="settings-modal">
+    <div class="modal__bg js-modal__exit"></div>
+    <div class="modal__container">
+      <p class="h1">Settings</p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et ut eos
+        fugit corrupti adipisci repellendus repudiandae nulla soluta, esse
+        eligendi aliquid qui hic illum neque natus quos ab libero!
+        Praesentium, ipsa debitis deserunt sunt laboriosam molestias
+        voluptates deleniti dolores officiis eligendi magnam tenetur eaque
+        neque. Exercitationem illo adipisci necessitatibus alias!
+      </p>
+      <button class="modal__close js-modal__exit" title="Close modal">x</button>
+    </div>
+  </div>
 
   <div class="footer--space-before"></div>
   <footer class="footer">

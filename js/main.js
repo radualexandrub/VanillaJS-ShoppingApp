@@ -281,6 +281,23 @@ function searchFilterItems(event) {
   outputNoOfItems.innerHTML = cntSearchedItems;
 }
 
+/* Modal for Settings Popup */
+const VanillaJSModals = document.querySelectorAll("[data-modal]");
+VanillaJSModals.forEach(function (modalTrigger) {
+  modalTrigger.addEventListener("click", function (event) {
+    event.preventDefault();
+    const modal = document.getElementById(modalTrigger.dataset.modal);
+    modal.classList.add("modal__open");
+    const modalExits = modal.querySelectorAll(".js-modal__exit");
+    modalExits.forEach(function (exit) {
+      exit.addEventListener("click", function (event) {
+        event.preventDefault();
+        modal.classList.remove("modal__open");
+      });
+    });
+  });
+});
+
 /* Dark Mode */
 const checkboxDarkTheme = document.getElementById("toggleDarkMode");
 const currentTheme = localStorage.getItem("theme")
