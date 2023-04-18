@@ -23,6 +23,9 @@ let outputTotalPriceChecked = document.getElementById(
 let outputTotalPriceUnchecked = document.getElementById(
   "outputTotalPriceUnchecked"
 );
+let exportListAsJSONAnchorLink = document.getElementById(
+  "exportListAsJSONAnchorLink"
+);
 
 let outputTodayDateGreeting = document.getElementById("outputTodayDate");
 outputTodayDateGreeting.innerHTML = getTodayDateFormatted();
@@ -47,6 +50,7 @@ if (arrItemsJSON && arrItemsJSON.length) {
 formAddItem.addEventListener("submit", addItem);
 outputItemList.addEventListener("click", deleteOrEditItem);
 inputTextSearchByName.addEventListener("keyup", searchFilterItems);
+exportListAsJSONAnchorLink.addEventListener("click", exportListAsJSON);
 window.onload = displayItemsOnLoad;
 
 /*
@@ -321,4 +325,22 @@ function toggleDarkTheme(e) {
     localStorage.setItem("theme", "light");
     console.debug("toggleDarkTheme called: light theme set");
   }
+}
+
+/* Export and Import Tasks List as JSON */
+function exportListAsJSON() {
+  // https://stackoverflow.com/questions/33780271/export-a-json-object-to-a-text-file
+  const filename = `ShoppingList_${new Date().toISOString().slice(0, 10)}.json`;
+  const jsonStr = JSON.stringify(arrItems);
+
+  let element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(jsonStr)
+  );
+  element.setAttribute("download", filename);
+  element.style.display = "none";
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }
