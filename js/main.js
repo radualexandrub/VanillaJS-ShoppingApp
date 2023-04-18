@@ -26,6 +26,7 @@ let outputTotalPriceUnchecked = document.getElementById(
 let exportListAsJSONAnchorLink = document.getElementById(
   "exportListAsJSONAnchorLink"
 );
+let importJSONFileForm = document.getElementById("importJSONFileForm");
 
 let outputTodayDateGreeting = document.getElementById("outputTodayDate");
 outputTodayDateGreeting.innerHTML = getTodayDateFormatted();
@@ -51,6 +52,7 @@ formAddItem.addEventListener("submit", addItem);
 outputItemList.addEventListener("click", deleteOrEditItem);
 inputTextSearchByName.addEventListener("keyup", searchFilterItems);
 exportListAsJSONAnchorLink.addEventListener("click", exportListAsJSON);
+importJSONFileForm.addEventListener("submit", importListAsJSON);
 window.onload = displayItemsOnLoad;
 
 /*
@@ -59,6 +61,7 @@ window.onload = displayItemsOnLoad;
 function displayItemsOnLoad() {
   console.debug("Calling displayItemsOnLoad: " + JSON.stringify(arrItems));
 
+  outputItemList.innerHTML = ""; // Clear HTML list before
   arrItems.forEach((item) => {
     utilCreateAndDisplayItem(item.id, item.name, item.price, item.checked);
   });
@@ -343,4 +346,45 @@ function exportListAsJSON() {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+}
+
+/* Import Tasks List from JSON */
+function importListAsJSON(event) {
+  event.preventDefault();
+
+  let file = document.getElementById("JSONFileInput");
+  let importFileOutputMessage = document.getElementById(
+    "importJSONFileFormOutputMessages"
+  );
+  if (!file.value.length) {
+    importFileOutputMessage.innerHTML =
+      '<p style="color: #dc3545;">Please select a file to continue.</p>';
+    return;
+  }
+
+  const importListAsJSONonloadCallback = (event) => {
+    const methodName = "importListAsJSONonloadCallback()";
+    let listFromJSON = JSON.parse(event.target.result);
+    console.debug(`${methodName} JSON Read ${JSON.stringify(listFromJSON)}`);
+
+    // Overwrite or Concatenate to current Tasks list
+    let radioInput = Array.from(
+      document.getElementsByName("JSONFileRadioInputs")
+    ).find((r) => r.checked).value;
+    if (radioInput === "JSONFileRadioConcatenateList") {
+      arrItems = arrItems.concat(listFromJSON);
+      importFileOutputMessage.innerHTML = `<p>Current list was concated with list from ${file.files[0].name}.</p>`;
+    } else if (radioInput === "JSONFileRadioOverwriteList") {
+      arrItems = listFromJSON;
+      importFileOutputMessage.innerHTML = `<p>Current list was overwrited with list from ${file.files[0].name}.</p>`;
+    }
+
+    localStorage.setItem("arrItems", JSON.stringify(arrItems));
+    displayItemsOnLoad();
+    document.getElementById("importJSONFileForm").reset();
+  };
+
+  let reader = new FileReader();
+  reader.onload = importListAsJSONonloadCallback; // Callback event to run when the file is read
+  reader.readAsText(file.files[0]); // Read the file
 }

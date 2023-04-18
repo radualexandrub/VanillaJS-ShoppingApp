@@ -507,7 +507,7 @@ html::-webkit-scrollbar-track:hover {
 }
 @media screen and (max-width: 480px) {
   .modal__container {
-    max-width: calc(90% - 2rem);
+    max-width: calc(90% - 1rem);
   }
 }
 
