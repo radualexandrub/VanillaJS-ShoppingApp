@@ -142,10 +142,64 @@
     <div class="modal" id="settings-modal">
       <div class="modal__bg js-modal__exit"></div>
       <div class="modal__container">
-        <p class="h2">Import or Export List</p>
+        <p class="h2">Sort Items</p>
+        <form id="sortItemsForm" style="accent-color: var(--primary-color)">
+          <!-- Radio Inputs for Sorting Options -->
+          <legend>Sort by:</legend>
+          <div>
+            <input
+              type="radio"
+              name="sortItemsRadioInputs"
+              id="sortByPriceAscending"
+              value="priceAscending"
+              checked="checked"
+            />
+            <label for="sortByPriceAscending"> Price Ascending </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="sortItemsRadioInputs"
+              id="sortByPriceDescending"
+              value="priceDescending"
+            />
+            <label for="sortByPriceDescending"> Price Descending </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="sortItemsRadioInputs"
+              id="sortByCheckedAscending"
+              value="checkedAscending"
+            />
+            <label for="sortByCheckedAscending"> Checked Items First </label>
+          </div>
+          <div style="margin-bottom: 1rem">
+            <input
+              type="radio"
+              name="sortItemsRadioInputs"
+              id="sortByCheckedDescending"
+              value="checkedDescending"
+            />
+            <label for="sortByCheckedDescending"> Checked Items Last </label>
+          </div>
+          <div id="sortItemsFormOutputMessages" style="margin-bottom: 1rem">
+            <!-- Sorting Output Messages will be displayed here -->
+          </div>
+          <!-- Submit Button -->
+          <div style="display: flex; justify-content: end">
+            <button
+              type="submit"
+              class="form__btn"
+              style="padding: 0.55em 1.25em"
+            >
+              Apply sorting
+            </button>
+          </div>
+        </form>
+        <p class="h2" style="margin-top: 1rem">Import or Export List</p>
         <form
           id="importJSONFileForm"
-          class="form-container--modal"
           style="accent-color: var(--primary-color)"
         >
           <!-- File Input -->

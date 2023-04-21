@@ -305,6 +305,56 @@ VanillaJSModals.forEach(function (modalTrigger) {
   });
 });
 
+/* Items Sorting */
+let sortItemsForm = document.getElementById("sortItemsForm");
+sortItemsForm.addEventListener("submit", sortItems);
+function sortItems(event) {
+  event.preventDefault();
+
+  let radioInputValue = Array.from(
+    document.getElementsByName("sortItemsRadioInputs")
+  ).find((r) => r.checked).value;
+  let sortItemsFormOutputMessages = document.getElementById(
+    "sortItemsFormOutputMessages"
+  );
+  if (!arrItems.length) {
+    sortItemsFormOutputMessages.innerHTML =
+      '<p style="color: #dc3545;">Please make sure that list is not empty before sorting.</p>';
+    return;
+  }
+
+  arrItems.sort(function (a, b) {
+    switch (radioInputValue) {
+      case "priceAscending":
+        sortItemsFormOutputMessages.innerHTML =
+          "<p>List was sorted by price ascending.</p>";
+        return parseFloat(a.price) - parseFloat(b.price);
+
+      case "priceDescending":
+        sortItemsFormOutputMessages.innerHTML =
+          "<p>List was sorted by price descending.</p>";
+        return parseFloat(b.price) - parseFloat(a.price);
+
+      case "checkedAscending":
+        sortItemsFormOutputMessages.innerHTML =
+          "<p>List was sorted by checked status ascending.</p>";
+        return a.checked && !b.checked ? -1 : !a.checked && b.checked ? 1 : 0;
+
+      case "checkedDescending":
+        sortItemsFormOutputMessages.innerHTML =
+          "<p>List was sorted by checked status descending.</p>";
+        return a.checked && !b.checked ? 1 : !a.checked && b.checked ? -1 : 0;
+
+      default:
+        // Invalid sortOption, returning 0 to maintain original order
+        return 0;
+    }
+  });
+
+  localStorage.setItem("arrItems", JSON.stringify(arrItems));
+  displayItemsOnLoad();
+}
+
 /* Dark Mode */
 const checkboxDarkTheme = document.getElementById("toggleDarkMode");
 const currentTheme = localStorage.getItem("theme")
