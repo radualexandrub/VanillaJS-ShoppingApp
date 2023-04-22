@@ -27,6 +27,7 @@
     <header class="header">
       <div class="container">
         <form class="searchbar">
+          <!-- Search / Filter items Input -->
           <input
             class="searchbar__input"
             type="text"
@@ -36,6 +37,7 @@
           />
           <span class="search-icon"></span>
 
+          <!-- Toggle Dark Mode Navbar Button -->
           <div class="toggle-dark-mode">
             <input
               type="checkbox"
@@ -45,6 +47,7 @@
             <span class="dark-mode-icon"></span>
           </div>
 
+          <!-- Open App Modal for Settings Button -->
           <div class="toggle-modal-popup">
             <input
               type="checkbox"
@@ -260,6 +263,17 @@
           id="exportListAsJSONAnchorLink"
           >Export List</a
         >
+        <button class="modal__close js-modal__exit" title="Close modal">
+          x
+        </button>
+      </div>
+    </div>
+
+    <!-- Additional Edit item Modal -->
+    <div class="modal" id="edit-item-modal">
+      <div class="modal__bg js-modal__exit"></div>
+      <div class="modal__container">
+        <p>LOREM IPSUM DOLOR TEST</p>
         <button class="modal__close js-modal__exit" title="Close modal">
           x
         </button>

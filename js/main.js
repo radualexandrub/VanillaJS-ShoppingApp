@@ -264,6 +264,19 @@ function deleteOrEditItem(event) {
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
   }
+
+  if (event.target.classList.contains("js-edit-modal")) {
+    // Code to select and open modal manually directly by html id
+    const editItemModal = document.getElementById("edit-item-modal");
+    editItemModal.classList.add("modal__open");
+    const modalExits = editItemModal.querySelectorAll(".js-modal__exit");
+    modalExits.forEach(function (exit) {
+      exit.addEventListener("click", function (event) {
+        event.preventDefault();
+        editItemModal.classList.remove("modal__open");
+      });
+    });
+  }
 }
 
 /*
@@ -293,6 +306,7 @@ const VanillaJSModals = document.querySelectorAll("[data-modal]");
 VanillaJSModals.forEach(function (modalTrigger) {
   modalTrigger.addEventListener("click", function (event) {
     event.preventDefault();
+    // Get modal with id from button with attribute of data-modal="ModalId"
     const modal = document.getElementById(modalTrigger.dataset.modal);
     modal.classList.add("modal__open");
     const modalExits = modal.querySelectorAll(".js-modal__exit");

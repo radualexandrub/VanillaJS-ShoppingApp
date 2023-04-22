@@ -13,6 +13,13 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
   inputDisplayItemPrice.className = "js-edit-price";
   inputDisplayItemPrice.title = "Change the price of item";
 
+  // Create additional edit modal for item's URL edit
+  let btnEditModal = document.createElement("button");
+  btnEditModal.className = "js-edit-modal";
+  /* btnEditModal.setAttribute("data-modal", "edit-item-modal"); */
+  /* ^ code not needed as we manually open the modal by Id instead of using VanillaJSModals */
+  btnEditModal.title = "Open edit modal";
+
   // Create delete button
   let btnDelete = document.createElement("button");
   btnDelete.className = "js-delete";
@@ -34,6 +41,7 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
   li.appendChild(spanCheckbox);
   li.appendChild(inputDisplayItemName);
   li.appendChild(inputDisplayItemPrice);
+  li.appendChild(btnEditModal);
   li.appendChild(btnDelete);
 
   // Display item in list
