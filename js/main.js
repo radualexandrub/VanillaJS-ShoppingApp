@@ -63,7 +63,13 @@ function displayItemsOnLoad() {
 
   outputItemList.innerHTML = ""; // Clear HTML list before
   arrItems.forEach((item) => {
-    utilCreateAndDisplayItem(item.id, item.name, item.price, item.checked);
+    utilCreateAndDisplayItem(
+      item.id,
+      item.name,
+      item.price,
+      item.checked,
+      item.URL
+    );
   });
 
   /* Update display of total items and price */
@@ -106,7 +112,9 @@ function addItem(event) {
   utilCreateAndDisplayItem(
     itemID,
     capitalizeFirstLetter(inputTextItemName.value.trim()),
-    inputNumberItemPrice.value
+    inputNumberItemPrice.value,
+    false,
+    ""
   );
 
   /* Save item to js array, clear form input */
@@ -115,9 +123,10 @@ function addItem(event) {
     name: capitalizeFirstLetter(inputTextItemName.value.trim()),
     price: inputNumberItemPrice.value,
     checked: false,
+    URL: "",
   });
   inputTextItemName.value = "";
-  inputNumberItemPrice.value = "";
+  inputNumberItemPrice.value = 0;
 
   /* Update display of total items and price */
   utilUpdateAndDisplayTotalItemsAndPrice(
@@ -139,7 +148,10 @@ function addItem(event) {
   Delete or Edit Item Event
 */
 function deleteOrEditItem(event) {
-  console.debug("Calling deleteOrEditItem...");
+  "use strict";
+  const itemId = event.target.parentElement.getAttribute("data-key");
+  const itemFoundIndex = arrItems.findIndex((item) => item.id === itemId);
+  console.debug(`Calling deleteOrEditItem for item with id=${itemId}`);
   if (event.target.classList.contains("js-delete")) {
     let li = event.target.parentElement;
     li.classList.add("js-delete-animation");
@@ -149,11 +161,8 @@ function deleteOrEditItem(event) {
     });
 
     // Delete item from local array
-    let itemIDToDelete = event.target.parentElement.getAttribute("data-key");
-    arrItems = arrItems.filter((item) => item.id !== itemIDToDelete);
-    console.debug(
-      "deleteOrEditItem: item with id " + itemIDToDelete + " deleted"
-    );
+    arrItems = arrItems.filter((item) => item.id !== itemId);
+    console.debug("deleteOrEditItem: item with id " + itemId + " deleted");
 
     /* Update display of total items and price */
     utilUpdateAndDisplayTotalItemsAndPrice(
@@ -173,8 +182,6 @@ function deleteOrEditItem(event) {
 
   if (event.target.classList.contains("js-edit-name")) {
     // let pNewPrice = prompt("Edit your entry", event.target.innerText); // deprecated
-    let itemIDToEdit = event.target.parentElement.getAttribute("data-key");
-    let itemFoundIndex = arrItems.findIndex((item) => item.id === itemIDToEdit);
     let pOldName = arrItems[itemFoundIndex].name;
 
     event.target.addEventListener("blur", function () {
@@ -198,8 +205,6 @@ function deleteOrEditItem(event) {
   }
 
   if (event.target.classList.contains("js-edit-price")) {
-    let itemIDToEdit = event.target.parentElement.getAttribute("data-key");
-    let itemFoundIndex = arrItems.findIndex((item) => item.id === itemIDToEdit);
     let pOldPrice = arrItems[itemFoundIndex].price;
 
     event.target.addEventListener("blur", function () {
@@ -231,21 +236,12 @@ function deleteOrEditItem(event) {
   }
 
   if (event.target.classList.contains("js-check-item")) {
-    let itemIDToCheck = event.target.parentElement.getAttribute("data-key");
-    let itemFoundIndex = arrItems.findIndex(
-      (item) => item.id === itemIDToCheck
-    );
-
     if (event.target.checked) {
       arrItems[itemFoundIndex].checked = true;
-      console.debug(
-        "deleteOrEditItem: item with id " + itemIDToCheck + " checked"
-      );
+      console.debug("deleteOrEditItem: item with id " + itemId + " checked");
     } else {
       arrItems[itemFoundIndex].checked = false;
-      console.debug(
-        "deleteOrEditItem: item with id " + itemIDToCheck + " unchecked"
-      );
+      console.debug("deleteOrEditItem: item with id " + itemId + " unchecked");
     }
 
     /* Update display of total items and price */
@@ -258,8 +254,7 @@ function deleteOrEditItem(event) {
 
     /* Save items array to localStorage */
     console.debug(
-      "deleteOrEditItem called successfully! Saving new array to localStorage: " +
-        JSON.stringify(arrItems)
+      "deleteOrEditItem called successfully! Saving new array to localStorage..."
     );
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
@@ -275,6 +270,59 @@ function deleteOrEditItem(event) {
         event.preventDefault();
         editItemModal.classList.remove("modal__open");
       });
+    });
+
+    // Get inputs from edit modal
+    let item = arrItems.find((item) => item.id === itemId);
+    let displayInModalItemName = document.getElementById(
+      "displayInModalItemName"
+    );
+    let displayInModalItemPrice = document.getElementById(
+      "displayInModalItemPrice"
+    );
+    let displayInModalItemURL = document.getElementById(
+      "displayInModalItemURL"
+    );
+
+    // Populate modal with item's data
+    displayInModalItemName.value = item["name"];
+    displayInModalItemPrice.value = item["price"];
+    displayInModalItemURL.value = item["URL"];
+
+    // Add listeners on blur. Save edits, if any
+    displayInModalItemName.addEventListener("blur", function (eventInModal) {
+      let pNewName = eventInModal.target.value;
+      if (pNewName !== null && pNewName !== item["name"]) {
+        arrItems[itemFoundIndex].name = pNewName;
+        /* Save items array to localStorage */
+        localStorage.setItem("arrItems", JSON.stringify(arrItems));
+        displayItemsOnLoad();
+      }
+    });
+    displayInModalItemPrice.addEventListener("blur", function (eventInModal) {
+      let pNewPrice = eventInModal.target.value;
+      if (pNewPrice !== null && pNewPrice !== item["price"]) {
+        arrItems[itemFoundIndex].price = pNewPrice;
+        /* Update display of total items and price */
+        utilUpdateAndDisplayTotalItemsAndPrice(
+          arrItems,
+          outputTotalPriceAll,
+          outputTotalPriceChecked,
+          outputTotalPriceUnchecked
+        );
+        /* Save items array to localStorage */
+        localStorage.setItem("arrItems", JSON.stringify(arrItems));
+        displayItemsOnLoad();
+      }
+    });
+    displayInModalItemURL.addEventListener("blur", function (eventInModal) {
+      let pNewURL = eventInModal.target.value;
+      if (pNewURL !== null && pNewURL !== item["URL"]) {
+        arrItems[itemFoundIndex].URL = pNewURL;
+        /* Save items array to localStorage */
+        localStorage.setItem("arrItems", JSON.stringify(arrItems));
+        displayItemsOnLoad();
+      }
     });
   }
 }

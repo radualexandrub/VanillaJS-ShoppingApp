@@ -1,14 +1,22 @@
-function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
+function utilCreateAndDisplayItem(
+  itemID,
+  itemName,
+  itemPrice,
+  itemChecked,
+  itemURL
+) {
   let li = document.createElement("li");
   li.className = "list-container__item";
 
   // Create item input text to display and edit item name
   let inputDisplayItemName = document.createElement("input");
   inputDisplayItemName.value = itemName;
+  inputDisplayItemName.type = "text";
   inputDisplayItemName.className = "js-edit-name";
 
   // Create item input number to display and edit item price
   let inputDisplayItemPrice = document.createElement("input");
+  // inputDisplayItemPrice.type = "number"; // TODO: Format to number input and then hide arrows
   inputDisplayItemPrice.value = itemPrice;
   inputDisplayItemPrice.className = "js-edit-price";
   inputDisplayItemPrice.title = "Change the price of item";
@@ -29,6 +37,7 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
   let inputDisplayItemChecked = document.createElement("input");
   inputDisplayItemChecked.type = "checkbox";
   inputDisplayItemChecked.className = "js-check-item";
+  inputDisplayItemChecked.title = "Check/Uncheck item";
   if (itemChecked) {
     inputDisplayItemChecked.checked = true;
   }
@@ -54,6 +63,7 @@ function utilCreateAndDisplayItem(itemID, itemName, itemPrice, itemChecked) {
         name: itemName,
         price: itemPrice,
         checked: itemChecked,
+        URL: itemURL,
       })
   );
 }
