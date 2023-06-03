@@ -150,8 +150,8 @@ function addItem(event) {
 function deleteOrEditItem(event) {
   "use strict";
   const itemId = event.target.parentElement.getAttribute("data-key");
+  const methodName = `deleteOrEditItem() for item with id=${itemId}`;
   const itemFoundIndex = arrItems.findIndex((item) => item.id === itemId);
-  console.debug(`Calling deleteOrEditItem for item with id=${itemId}`);
   if (event.target.classList.contains("js-delete")) {
     let li = event.target.parentElement;
     li.classList.add("js-delete-animation");
@@ -162,7 +162,7 @@ function deleteOrEditItem(event) {
 
     // Delete item from local array
     arrItems = arrItems.filter((item) => item.id !== itemId);
-    console.debug("deleteOrEditItem: item with id " + itemId + " deleted");
+    console.debug(`${methodName}: item with id " + itemId + " deleted`);
 
     /* Update display of total items and price */
     utilUpdateAndDisplayTotalItemsAndPrice(
@@ -174,13 +174,29 @@ function deleteOrEditItem(event) {
 
     /* Save items array to localStorage */
     console.debug(
-      "deleteOrEditItem called successfully! Saving new array to localStorage: " +
-        JSON.stringify(arrItems)
+      `${methodName} called successfully! Saving new array to localStorage: ${JSON.stringify(
+        arrItems
+      )}`
     );
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
   }
 
   if (event.target.classList.contains("js-edit-name")) {
+    /*
+      If user CTRL+Clicks item's name, then open item's URL in a separate tab
+    */
+    if (window.event.ctrlKey || window.event.metaKey) {
+      const itemURL = arrItems[itemFoundIndex].URL;
+      if (itemURL && itemURL.includes("http")) {
+        window.open(itemURL, "_blank");
+      } else {
+        console.warn(
+          `${methodName} URL "${itemURL}" is not valid or does not contain "http"`
+        );
+      }
+      return;
+    }
+
     // let pNewPrice = prompt("Edit your entry", event.target.innerText); // deprecated
     let pOldName = arrItems[itemFoundIndex].name;
 
@@ -193,13 +209,12 @@ function deleteOrEditItem(event) {
         /* Save items array to localStorage */
         localStorage.setItem("arrItems", JSON.stringify(arrItems));
         console.debug(
-          "deleteOrEditItem called successfully! Saving new array to localStorage: " +
-            JSON.stringify(arrItems)
+          `${methodName} called successfully! Saving new array to localStorage: ${JSON.stringify(
+            arrItems
+          )}`
         );
       } else {
-        console.debug(
-          "deleteOrEditItem: pNewName has the same value as before"
-        );
+        console.debug(`${methodName} pNewName has the same value as before`);
       }
     });
   }
@@ -223,14 +238,13 @@ function deleteOrEditItem(event) {
 
         /* Save items array to localStorage */
         console.debug(
-          "deleteOrEditItem called successfully! Saving new array to localStorage: " +
-            JSON.stringify(arrItems)
+          `${methodName} called successfully! Saving new array to localStorage: ${JSON.stringify(
+            arrItems
+          )}`
         );
         localStorage.setItem("arrItems", JSON.stringify(arrItems));
       } else {
-        console.debug(
-          "deleteOrEditItem: pNewPrice has the same value as before"
-        );
+        console.debug(`${methodName} pNewName has the same value as before`);
       }
     });
   }
@@ -238,10 +252,10 @@ function deleteOrEditItem(event) {
   if (event.target.classList.contains("js-check-item")) {
     if (event.target.checked) {
       arrItems[itemFoundIndex].checked = true;
-      console.debug("deleteOrEditItem: item with id " + itemId + " checked");
+      console.debug(`${methodName} item with id ${itemId} checked`);
     } else {
       arrItems[itemFoundIndex].checked = false;
-      console.debug("deleteOrEditItem: item with id " + itemId + " unchecked");
+      console.debug(`${methodName} item with id ${itemId} unchecked`);
     }
 
     /* Update display of total items and price */
@@ -254,7 +268,7 @@ function deleteOrEditItem(event) {
 
     /* Save items array to localStorage */
     console.debug(
-      "deleteOrEditItem called successfully! Saving new array to localStorage..."
+      `${methodName} called successfully! Saving new array to localStorage...`
     );
     localStorage.setItem("arrItems", JSON.stringify(arrItems));
     localStorage.setItem("arrItems", JSON.stringify(arrItems));

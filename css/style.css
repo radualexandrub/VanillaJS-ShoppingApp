@@ -359,6 +359,9 @@ html::-webkit-scrollbar-track:hover {
   flex-grow: 1;
   min-width: 8rem;
 }
+.list-container__item input.js-edit-name.pointer-cursor {
+  cursor: pointer;
+}
 
 @media screen and (max-width: 480px) {
   .list-container__item input {

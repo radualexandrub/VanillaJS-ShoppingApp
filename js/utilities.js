@@ -13,13 +13,32 @@ function utilCreateAndDisplayItem(
   inputDisplayItemName.value = itemName;
   inputDisplayItemName.type = "text";
   inputDisplayItemName.className = "js-edit-name";
+  inputDisplayItemName.title =
+    "Edit item name. Hold CTRL+Click to open item http(s) URL";
+  {
+    /*
+      Utility Listeners to show a CSS Pointer Cursor when hovering
+      over input element while holding down the CTRL key
+    */
+    function updateCursor(event) {
+      if (event.ctrlKey || event.metaKey) {
+        inputDisplayItemName.classList.add("pointer-cursor");
+      } else {
+        inputDisplayItemName.classList.remove("pointer-cursor");
+      }
+    }
+    inputDisplayItemName.addEventListener("mouseover", updateCursor);
+    inputDisplayItemName.addEventListener("mouseout", updateCursor);
+    document.addEventListener("keydown", updateCursor);
+    document.addEventListener("keyup", updateCursor);
+  }
 
   // Create item input number to display and edit item price
   let inputDisplayItemPrice = document.createElement("input");
   // inputDisplayItemPrice.type = "number"; // TODO: Format to number input and then hide arrows
   inputDisplayItemPrice.value = itemPrice;
   inputDisplayItemPrice.className = "js-edit-price";
-  inputDisplayItemPrice.title = "Change the price of item";
+  inputDisplayItemPrice.title = "Edit item price";
 
   // Create additional edit modal for item's URL edit
   let btnEditModal = document.createElement("button");
