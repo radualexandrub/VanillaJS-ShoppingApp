@@ -27,6 +27,7 @@
     <header class="header">
       <div class="container">
         <form class="searchbar">
+          <!-- Search / Filter items Input -->
           <input
             class="searchbar__input"
             type="text"
@@ -36,6 +37,7 @@
           />
           <span class="search-icon"></span>
 
+          <!-- Toggle Dark Mode Navbar Button -->
           <div class="toggle-dark-mode">
             <input
               type="checkbox"
@@ -45,6 +47,7 @@
             <span class="dark-mode-icon"></span>
           </div>
 
+          <!-- Open App Modal for Settings Button -->
           <div class="toggle-modal-popup">
             <input
               type="checkbox"
@@ -100,6 +103,7 @@
           <span class="checkbox"></span>
           <input class="js-edit-name" value="Test item">
           <input class="js-edit-price" value=5>
+          <button class="js-edit-modal"></button>
           <button class="js-delete"></button>
         </li> -->
         </ul>
@@ -260,6 +264,40 @@
           id="exportListAsJSONAnchorLink"
           >Export List</a
         >
+        <button class="modal__close js-modal__exit" title="Close modal">
+          x
+        </button>
+      </div>
+    </div>
+
+    <!-- Additional Edit item Modal -->
+    <div class="modal" id="edit-item-modal">
+      <div class="modal__bg js-modal__exit"></div>
+      <div class="modal__container">
+        <div>
+          <div class="list-container__item">
+            <label style="min-width: 3rem" for="displayInModalItemName"
+              >Name:
+            </label>
+            <input
+              type="text"
+              id="displayInModalItemName"
+              class="js-edit-name"
+            />
+          </div>
+          <div class="list-container__item">
+            <label style="min-width: 3rem" for="displayInModalItemName"
+              >Price:
+            </label>
+            <input type="text" id="displayInModalItemPrice" />
+          </div>
+          <div class="list-container__item">
+            <label style="min-width: 3rem" for="displayInModalItemName"
+              >URL:
+            </label>
+            <input type="text" id="displayInModalItemURL" />
+          </div>
+        </div>
         <button class="modal__close js-modal__exit" title="Close modal">
           x
         </button>

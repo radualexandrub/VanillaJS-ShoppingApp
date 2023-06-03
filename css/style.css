@@ -359,6 +359,9 @@ html::-webkit-scrollbar-track:hover {
   flex-grow: 1;
   min-width: 8rem;
 }
+.list-container__item input.js-edit-name.pointer-cursor {
+  cursor: pointer;
+}
 
 @media screen and (max-width: 480px) {
   .list-container__item input {
@@ -366,17 +369,28 @@ html::-webkit-scrollbar-track:hover {
   }
 }
 
-.list-container__item .js-delete {
+.list-container__item .js-delete,
+.list-container__item .js-edit-modal {
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
-.list-container__item .js-delete::after {
-  content: "\f2ed";
+.list-container__item .js-edit-modal {
+  margin-right: 1rem;
+}
+.list-container__item .js-delete::after,
+.list-container__item .js-edit-modal::after {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 1.4em;
   color: var(--primary-color);
+}
+.list-container__item .js-delete::after {
+  content: "\f2ed";
+}
+.list-container__item .js-edit-modal::after {
+  /* content: "\f044"; */
+  content: "\f304";
 }
 
 .list-container__item input[type="checkbox"]:checked ~ input.js-edit-name,
